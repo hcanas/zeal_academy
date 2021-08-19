@@ -39,6 +39,18 @@ class ScholarSeeder extends Seeder
                 'share' => 60,
                 'referrer' => 'Public',
             ],
+            [
+                'name' => 'vin14#5692',
+                'address' => '0x2843d895078c5103f64852a72193ed2f29950386',
+                'share' => 60,
+                'referrer' => 'Mahesvara',
+            ],
+            [
+                'name' => 'iampadz28#7521',
+                'address' => '0x6aaaceb65188b2eb52e6ae886adb29b9dc7f176e',
+                'share' => 60,
+                'referrer' => 'Mushin',
+            ],
         ];
 
         foreach ($scholars AS $scholar) {

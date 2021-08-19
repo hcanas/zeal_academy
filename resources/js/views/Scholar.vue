@@ -8,27 +8,27 @@
             <img src="https://assets.coingecko.com/coins/images/10366/small/SLP.png?1578640057" class="w-4 h-4">
             <span class="text-sm w-14">(in bag)</span>
             <span>:</span>
-            <span>{{ scholar.earnings?.slp_inventory }}</span>
+            <span>{{ scholar.stats?.in_game_slp }}</span>
             <span class="text-sm">{{ `($${currentSLPTotalPrice})` }}</span>
           </div>
           <div class="flex items-center space-x-1">
             <img src="https://assets.coingecko.com/coins/images/10366/small/SLP.png?1578640057" class="w-4 h-4">
             <span class="text-sm w-14">(claimed)</span>
             <span>:</span>
-            <span>{{ scholar.earnings?.slp_holdings }}</span>
+            <span>{{ scholar.stats?.ronin_slp }}</span>
             <span class="text-sm">{{ `($${claimedSLPTotalPrice})` }}</span>
           </div>
           <div class="flex items-center space-x-1">
             <img src="https://assets.coingecko.com/coins/images/10366/small/SLP.png?1578640057" class="w-4 h-4">
             <span class="text-sm w-14">(overall)</span>
             <span>:</span>
-            <span>{{ scholar.earnings?.overall_farmed_slp + scholar.earnings?.slp_holdings + scholar.earnings?.slp_inventory }}</span>
+            <span>{{ scholar.stats?.in_game_slp + scholar.stats?.ronin_slp + scholar.stats?.last_claim_amount }}</span>
           </div>
         </div>
         <div class="w-1/2 flex items-end flex-col">
-          <p>{{ `${scholar.leaderboards?.elo} MMR` }}</p>
+          <p>{{ `${scholar.stats?.mmr} MMR` }}</p>
           <span class="text-xs font-bold uppercase mt-2">next claim availability</span>
-          <span class="text-sm">{{ scholar.earnings?.next_claim.substr(0, scholar.earnings?.next_claim.indexOf('|')) }}</span>
+          <span class="text-sm">{{ getNextClaimDate(scholar.stats?.last_claim_timestamp) }}</span>
         </div>
       </div>
     </div>
@@ -78,14 +78,20 @@
         .then(response => this.slp_price = response.data);
     },
     methods: {
+      getNextClaimDate(last_claim_timestamp) {
+        const last_claim_date = new Date(last_claim_timestamp * 1000);
+        last_claim_date.setDate(last_claim_date.getDate() + 14);
+        const next_claim_date = new Date(last_claim_date.getTime() + 8 * 3600 * 1000).toUTCString().replace( / GMT$/, "" );
+        return next_claim_date;
+      }
     },
     computed: {
       currentSLPTotalPrice() {
-        const total = (this.scholar.earnings?.slp_inventory * this.$store.getters['getSLPPrice']).toString();
+        const total = (this.scholar.stats?.in_game_slp * this.$store.getters['getSLPPrice']).toString();
         return total.substring(0, total.indexOf('.') + 3);
       },
       claimedSLPTotalPrice() {
-        const total = (this.scholar.earnings?.slp_holdings * this.$store.getters['getSLPPrice']).toString();
+        const total = (this.scholar.stats?.ronin_slp * this.$store.getters['getSLPPrice']).toString();
         return total.substring(0, total.indexOf('.') + 3);
       },
     },

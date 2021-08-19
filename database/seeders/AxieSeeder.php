@@ -25,7 +25,7 @@ class AxieSeeder extends Seeder
             $axies = $service->axies($scholar->address);
 
             foreach ($axies AS $axie) {
-                Axie::create([
+                Axie::firstOrCreate([
                     'id' => $axie['id'],
                     'scholar_id' => $scholar['id'],
                     'name' => $axie['name'],

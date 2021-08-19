@@ -6,25 +6,14 @@ use Illuminate\Support\Facades\Http;
 
 class StatisticsService
 {
-    public function earnings($address)
+    public function stats($address)
     {
-        $response = Http::get('https://axie-proxy.secret-shop.buzz/_schoEarnings/'.$address);
+        $response = Http::get('https://api.lunaciarover.com/stats/'.$address);
 
-        if ($response->json('earnings')['last_claimed'] === null) {
-            return null;
+        if ($response->json('game_stats_success')) {
+            return $response->json();
         } else {
-            return $response->json('earnings');
-        }
-    }
-
-    public function leaderboards($address)
-    {
-        $response = Http::get('https://axie-proxy.secret-shop.buzz/_basicStats/'.$address);
-
-        if ($response->json('stats')['name'] === null) {
             return null;
-        } else {
-            return $response->json('stats');
         }
     }
 

@@ -60,8 +60,7 @@ class ScholarController extends Controller
         if ($scholar === null) {
             return response()->json('Scholar not found.', 404);
         } else {
-            $scholar->earnings = $statistics_service->earnings($scholar->address);
-            $scholar->leaderboards = $statistics_service->leaderboards($scholar->address);
+            $scholar->stats = $statistics_service->stats($scholar->address);
             return response()->json($scholar);
         }
     }
