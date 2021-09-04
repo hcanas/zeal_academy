@@ -9,7 +9,7 @@ const routes = [
     component: ScholarList,
   },
   {
-    path: '/scholar/:address',
+    path: '/scholar/:id',
     component: Scholar,
   },
 ];

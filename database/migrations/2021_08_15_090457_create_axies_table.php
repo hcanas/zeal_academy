@@ -15,7 +15,7 @@ class CreateAxiesTable extends Migration
     {
         Schema::create('axies', function (Blueprint $table) {
             $table->unsignedBigInteger('id')->primary();
-            $table->unsignedBigInteger('scholar_id');
+            $table->string('scholar_id')->index();
             $table->string('name');
             $table->string('class');
             $table->string('image');

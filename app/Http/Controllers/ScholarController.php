@@ -22,6 +22,7 @@ class ScholarController extends Controller
     public function index(Request $request)
     {
         $scholars = Scholar::query()
+            ->orderBy('in_game_slp', 'desc')
             ->paginate($request->input('per_page', 25))
             ->appends($request->input());
 
@@ -46,21 +47,20 @@ class ScholarController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  string  $address
+     * @param  string  $id
      * @param StatisticsService $statistics_service
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show($address, StatisticsService $statistics_service)
+    public function show($id, StatisticsService $statistics_service)
     {
         $scholar = Scholar::query()
             ->with('axies.parts.card')
-            ->where('address', $address)
+            ->where('id', $id)
             ->first();
 
         if ($scholar === null) {
             return response()->json('Scholar not found.', 404);
         } else {
-            $scholar->stats = $statistics_service->stats($scholar->address);
             return response()->json($scholar);
         }
     }

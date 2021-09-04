@@ -8,10 +8,12 @@ class StatisticsService
 {
     public function stats($address)
     {
-        $response = Http::get('https://api.lunaciarover.com/stats/'.$address);
+        $response = Http::get('https://axiesworld.firebaseapp.com/updateSpecific?wallet='.$address);
 
-        if ($response->json('game_stats_success')) {
+        if ($response->json('total_slp')) {
             return $response->json();
+        } elseif ($response->json('walletData')) {
+            return $response->json('walletData');
         } else {
             return null;
         }

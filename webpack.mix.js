@@ -16,3 +16,17 @@ mix.js('resources/js/app.js', 'public/js')
     .postCss('resources/css/app.css', 'public/css', [
         require('tailwindcss'),
     ]);
+
+mix.options({
+  hmrOptions: {
+    host: '127.0.0.1',
+    port: 8080,
+  },
+});
+
+mix.webpackConfig({
+  devServer: {
+    host: '127.0.0.1',
+    port: 8080,
+  },
+});

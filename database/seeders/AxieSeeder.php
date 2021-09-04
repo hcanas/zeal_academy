@@ -22,7 +22,7 @@ class AxieSeeder extends Seeder
         $scholars = Scholar::all();
 
         foreach ($scholars AS $scholar) {
-            $axies = $service->axies($scholar->address);
+            $axies = $service->axies($scholar->id);
 
             foreach ($axies AS $axie) {
                 Axie::firstOrCreate([
