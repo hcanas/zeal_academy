@@ -26,25 +26,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->call(function () {
-            $scholars = Scholar::get();
-            $statistics_service = new StatisticsService();
-
-            foreach ($scholars AS $scholar) {
-                $stats = $statistics_service->stats($scholar->id);
-                if ($stats) {
-                    $scholar->last_claim_date = date('Y-m-d H:i:s', $stats['claim_timestamp']);
-                    $scholar->next_claim_date = date('Y-m-d H:i:s', $stats['next_claim_timestamp']);
-                    $scholar->last_claimed_slp = $stats['last_claim_amount'];
-                    $scholar->ronin_slp = $stats['ronin_slp'];
-                    $scholar->in_game_slp = $stats['ingame_slp'];
-                    $scholar->mmr = $stats['pvpData']['mmr'];
-                    $scholar->rank = $stats['pvpData']['rank'];
-                    $scholar->save();
-                }
-            }
-        })
-        ->timezone('Asia/Manila')
+        $schedule->command('command:updateScholarStats')
         ->hourly();
     }
 
