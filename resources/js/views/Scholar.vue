@@ -34,11 +34,11 @@
     </div>
     <div class="flex-grow flex flex-col items-center lg:flex-row lg:flex-wrap">
       <div v-for="axie in scholar.axies" class="lg:w-1/3 flex flex-col items-center">
-        <div class="flex-shrink-0 flex justify-center w-56">
+        <div class="flex-shrink-0 flex justify-center w-2/3">
           <img :src="axie.image">
         </div>
         <div class="flex justify-center flex-wrap">
-          <img v-for="part in axie.parts" :src="`/images/${part.card.skill}.png`" class="w-1/2 lg:w-56 p-1">
+          <img v-for="part in axie.parts" :src="`/images/${part.card.skill}.png`" class="w-1/2 p-1">
         </div>
       </div>
     </div>
