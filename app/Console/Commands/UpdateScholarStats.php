@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Earning;
 use App\Models\Scholar;
 use App\Services\StatisticsService;
 use Illuminate\Console\Command;
@@ -45,14 +46,16 @@ class UpdateScholarStats extends Command
         foreach ($scholars AS $scholar) {
             $stats = $statistics_service->stats($scholar->id);
             if ($stats) {
-                $scholar->last_claim_date = date('Y-m-d H:i:s', $stats['claim_timestamp']);
-                $scholar->next_claim_date = date('Y-m-d H:i:s', $stats['next_claim_timestamp']);
-                $scholar->last_claimed_slp = $stats['last_claim_amount'];
-                $scholar->ronin_slp = $stats['ronin_slp'];
-                $scholar->in_game_slp = $stats['ingame_slp'];
-                $scholar->mmr = $stats['pvpData']['elo'];
-                $scholar->rank = $stats['pvpData']['rank'];
-                $scholar->save();
+                Earning::create([
+                    'scholar_id' => $scholar->id,
+                    'last_claim_date' => date('Y-m-d H:i:s', $stats['claim_timestamp']),
+                    'next_claim_date' => date('Y-m-d H:i:s', $stats['next_claim_timestamp']),
+                    'last_claimed_slp' => $stats['last_claim_amount'],
+                    'ronin_slp' => $stats['ronin_slp'],
+                    'in_game_slp' => $stats['ingame_slp'],
+                    'mmr' => $stats['pvpData']['elo'],
+                    'rank' => $stats['pvpData']['rank'],
+                ]);
             }
         }
     }

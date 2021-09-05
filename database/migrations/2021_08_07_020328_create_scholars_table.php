@@ -18,13 +18,6 @@ class CreateScholarsTable extends Migration
             $table->string('name');
             $table->unsignedDecimal('share', 5, 2);
             $table->string('relationship');
-            $table->dateTime('last_claim_date');
-            $table->dateTime('next_claim_date');
-            $table->unsignedInteger('last_claimed_slp');
-            $table->unsignedInteger('ronin_slp');
-            $table->unsignedInteger('in_game_slp');
-            $table->unsignedInteger('mmr');
-            $table->unsignedInteger('rank');
             $table->timestamps();
 
             $table->engine = 'InnoDB';

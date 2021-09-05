@@ -1,5 +1,5 @@
 <template>
-  <div v-if="scholar" class="w-full h-full flex flex-col px-4">
+  <div v-if="scholar" class="w-full h-full flex flex-col">
     <div class="flex-shrink-0 flex flex-col pb-2 border-b">
       <p class="text-2xl">{{ scholar.name }}</p>
       <div class="flex">
@@ -8,14 +8,14 @@
             <img src="https://assets.coingecko.com/coins/images/10366/small/SLP.png?1578640057" class="w-4 h-4">
             <span class="text-sm w-14">(in bag)</span>
             <span>:</span>
-            <span>{{ scholar.in_game_slp.toLocaleString() }}</span>
+            <span>{{ scholar.latest_earning.in_game_slp.toLocaleString() }}</span>
             <span class="text-sm">{{ `($${currentSLPPrice.toLocaleString()})` }}</span>
           </div>
           <div class="flex items-center space-x-1">
             <img src="https://assets.coingecko.com/coins/images/10366/small/SLP.png?1578640057" class="w-4 h-4">
             <span class="text-sm w-14">(claimed)</span>
             <span>:</span>
-            <span>{{ scholar.ronin_slp.toLocaleString() }}</span>
+            <span>{{ scholar.latest_earning.ronin_slp.toLocaleString() }}</span>
             <span class="text-sm">{{ `($${claimedSLPPrice.toLocaleString()})` }}</span>
           </div>
           <div class="flex items-center space-x-1">
@@ -26,9 +26,9 @@
           </div>
         </div>
         <div class="w-1/2 flex items-end flex-col">
-          <p>{{ `${scholar.mmr.toLocaleString()} MMR` }}</p>
+          <p>{{ `${scholar.latest_earning.mmr.toLocaleString()} MMR` }}</p>
           <span class="text-xs font-bold uppercase mt-2">next claim availability</span>
-          <span class="text-sm">{{ scholar.next_claim_date }}</span>
+          <span class="text-sm">{{ scholar.latest_earning.next_claim_date }}</span>
         </div>
       </div>
     </div>
@@ -63,17 +63,17 @@
     },
     computed: {
       currentSLPPrice() {
-        const total = (this.scholar.in_game_slp * this.$store.getters['getSLPPrice']).toString();
+        const total = (this.scholar.latest_earning.in_game_slp * this.$store.getters['getSLPPrice']).toString();
         return total.substring(0, total.indexOf('.') + 3) / 1;
       },
       claimedSLPPrice() {
-        const total = (this.scholar.ronin_slp * this.$store.getters['getSLPPrice']).toString();
+        const total = (this.scholar.latest_earning.ronin_slp * this.$store.getters['getSLPPrice']).toString();
         return total.substring(0, total.indexOf('.') + 3) / 1;
       },
       totalSLP() {
-        return (this.scholar.in_game_slp ?? 0)
-          + (this.scholar.ronin_slp ?? 0)
-          + (this.scholar.last_claimed_amount ?? 0);
+        return (this.scholar.latest_earning.in_game_slp ?? 0)
+          + (this.scholar.latest_earning.ronin_slp ?? 0)
+          + (this.scholar.latest_earning.last_claimed_amount ?? 0);
       },
     },
   }

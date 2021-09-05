@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             ScholarSeeder::class,
             CardSeeder::class,
             AxieSeeder::class,
+            EarningSeeder::class,
         ]);
     }
 }

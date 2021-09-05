@@ -1,25 +1,28 @@
 <template>
-  <div class="w-full h-full flex flex-col px-4 lg:px-20 py-4 lg:py-8">
+  <div class="w-full h-full flex flex-col">
+    <div class="flex justify-end pb-2">
+      <p class="text-xs uppercase text-gray-500">Updates every 8AM GMT+8.</p>
+    </div>
     <div class="flex flex-col lg:flex-row lg:space-x-8 space-y-4 lg:space-y-0 pb-4">
       <div class="flex-grow flex items-center bg-primary-base border px-4 py-2 rounded">
         <h5 class="text-white font-bold uppercase w-1/2">Manager Share</h5>
         <span class="w-1/2 flex flex-col items-end">
-          <span class="text-white">{{(total_slp * 0.4).toLocaleString() }}</span>
-          <span class="text-white">{{ `$${slpTotalPrice(total_slp * 0.4).toLocaleString()}` }}</span>
+          <span class="text-white">{{(totalSLP * 0.4).toLocaleString() }}</span>
+          <span class="text-white">{{ `$${slpTotalPrice(totalSLP * 0.4).toLocaleString()}` }}</span>
         </span>
       </div>
       <div class="flex-grow flex items-center bg-primary-base border px-4 py-2 rounded">
         <h5 class="text-white font-bold uppercase w-1/2">Scholar Share</h5>
         <span class="w-1/2 flex flex-col items-end">
-          <span class="text-white">{{(total_slp * 0.6).toLocaleString() }}</span>
-          <span class="text-white">{{ `$${slpTotalPrice(total_slp * 0.6).toLocaleString()}` }}</span>
+          <span class="text-white">{{(totalSLP * 0.6).toLocaleString() }}</span>
+          <span class="text-white">{{ `$${slpTotalPrice(totalSLP * 0.6).toLocaleString()}` }}</span>
         </span>
       </div>
       <div class="flex-grow flex items-center bg-primary-base border px-4 py-2 rounded">
         <h5 class="text-white font-bold uppercase w-1/2">Total</h5>
         <span class="w-1/2 flex flex-col items-end">
-          <span class="text-white">{{ total_slp.toLocaleString() }}</span>
-          <span class="text-white">{{ `$${slpTotalPrice(total_slp).toLocaleString()}` }}</span>
+          <span class="text-white">{{ totalSLP.toLocaleString() }}</span>
+          <span class="text-white">{{ `$${slpTotalPrice(totalSLP).toLocaleString()}` }}</span>
         </span>
       </div>
     </div>
@@ -51,15 +54,15 @@
             <router-link :to="`/scholar/${scholar.id}`" class="text-blue-600 hover:underline">{{ scholar.name }}</router-link>
           </td>
           <td class="text-center px-2 py-1">
-            <span class="block">{{ dailySLP(scholar.in_game_slp, daysPassed(scholar.last_claim_date)) }}</span>
-            <span class="text-gray-500 text-sm">{{ `$${slpTotalPrice(dailySLP(scholar.in_game_slp, daysPassed(scholar.last_claim_date)))}` }}</span>
+            <span class="block">{{ dailySLP(scholar.latest_earning.in_game_slp, daysPassed(scholar.latest_earning.last_claim_date)) }}</span>
+            <span class="text-gray-500 text-sm">{{ `$${slpTotalPrice(dailySLP(scholar.latest_earning.in_game_slp, daysPassed(scholar.latest_earning.last_claim_date)))}` }}</span>
           </td>
           <td class="text-center px-2 py-1">
-            <span class="block">{{ scholar.in_game_slp.toLocaleString() }}</span>
-            <span class="text-gray-500 text-sm">{{ `$${slpTotalPrice(scholar.in_game_slp)}` }}</span>
+            <span class="block">{{ scholar.latest_earning.in_game_slp.toLocaleString() }}</span>
+            <span class="text-gray-500 text-sm">{{ `$${slpTotalPrice(scholar.latest_earning.in_game_slp)}` }}</span>
           </td>
           <td class="text-center px-2 py-1">
-            <span class="block">{{ scholar.mmr.toLocaleString() }}</span>
+            <span class="block">{{ scholar.latest_earning.mmr.toLocaleString() }}</span>
 <!--            <span class="text-gray-500 text-sm">{{ scholar.rank.toLocaleString() }}</span>-->
           </td>
           <td class="text-center px-2 py-1">{{ `${scholar.relationship}` }}</td>
@@ -104,8 +107,8 @@
       },
     },
     computed: {
-      total_slp() {
-        return this.scholars.reduce((a, b) => a + (b['in_game_slp'] || 0), 0);
+      totalSLP() {
+        return this.scholars.reduce((a, b) => a + (b.latest_earning['in_game_slp'] || 0), 0);
       },
     },
   }

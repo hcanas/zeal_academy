@@ -15,17 +15,9 @@ class Scholar extends Model
         'name',
         'share',
         'relationship',
-        'last_claim_date',
-        'next_claim_date',
-        'last_claimed_slp',
-        'ronin_slp',
-        'in_game_slp',
-        'mmr',
-        'rank',
     ];
 
     protected $casts = [
-        'last_claim_date' => 'datetime:Y-m-d H:i:s',
         'created_at' => 'datetime:Y-m-d H:i:s',
         'updated_at' => 'datetime:Y-m-d H:i:s',
     ];
@@ -33,5 +25,15 @@ class Scholar extends Model
     public function axies()
     {
         return $this->hasMany(Axie::class);
+    }
+
+    public function earnings()
+    {
+        return $this->hasMany(Earning::class);
+    }
+
+    public function latestEarning()
+    {
+        return $this->hasOne(Earning::class)->latest();
     }
 }

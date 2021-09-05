@@ -1,6 +1,6 @@
 <template>
   <div class="w-full h-full flex flex-col overflow-y-auto">
-    <div class="flex-shrink-0 h-20 flex justify-between items-center px-4 lg:px-20">
+    <div class="flex-shrink-0 h-20 flex justify-between items-center px-4 lg:px-40">
       <p class="text-2xl">Zeal Academy</p>
       <p class="flex flex-col items-center">
         <span class="flex space-x-1 items-center">
@@ -16,7 +16,7 @@
         </router-link>
       </div>
     </div>
-    <div class="flex-grow lg:px-20 lg:py-8">
+    <div class="flex-grow px-4 lg:px-40 py-4 lg:py-8">
       <router-view :key="$route.fullPath"></router-view>
     </div>
   </div>
@@ -25,6 +25,11 @@
 <script>
   export default {
     name: "App",
+    data() {
+      return {
+        timer: 60 * 5,
+      }
+    },
     created() {
       this.checkSLPPrice();
 

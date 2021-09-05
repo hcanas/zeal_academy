@@ -22,7 +22,7 @@ class ScholarController extends Controller
     public function index(Request $request)
     {
         $scholars = Scholar::query()
-            ->orderBy('in_game_slp', 'desc')
+            ->with('latestEarning')
             ->paginate($request->input('per_page', 25))
             ->appends($request->input());
 
@@ -54,6 +54,7 @@ class ScholarController extends Controller
     public function show($id, StatisticsService $statistics_service)
     {
         $scholar = Scholar::query()
+            ->with('latestEarning')
             ->with('axies.parts.card')
             ->where('id', $id)
             ->first();
