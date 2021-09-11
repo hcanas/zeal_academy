@@ -61,7 +61,7 @@ class AxieSeeder extends Seeder
                                 ]);
                             }
 
-                            $part->axies()->attach($axie['id']);
+                            $part->axies()->sync([$axie['id']]);
                         }
                     }
                 }

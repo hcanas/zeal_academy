@@ -96,7 +96,7 @@ class ScholarSeeder extends Seeder
         ];
 
         foreach ($scholars AS $scholar) {
-            Scholar::create($scholar);
+            Scholar::firstOrCreate($scholar);
         }
     }
 }
