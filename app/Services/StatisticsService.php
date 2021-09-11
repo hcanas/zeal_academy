@@ -21,7 +21,7 @@ class StatisticsService
 
     public function axies($address)
     {
-        $response = Http::get('https://axie-proxy.secret-shop.buzz/_axiesPlease/'.$address);
+        $response = Http::get('https://api.lunaciaproxy.cloud/_axiesPlease/'.$address);
 
         if (count($response->json('available_axies')['results']) === 0) {
             return null;
