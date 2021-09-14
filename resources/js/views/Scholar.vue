@@ -28,19 +28,20 @@
         <div class="w-1/2 flex items-end flex-col">
           <p>{{ `${scholar.latest_earning.mmr.toLocaleString()} MMR` }}</p>
           <span class="text-xs font-bold uppercase mt-2">next claim availability</span>
-          <span class="text-sm">{{ scholar.latest_earning.next_claim_date }}</span>
+          <span class="text-sm">{{ convertDate(scholar.latest_earning.next_claim_date) }}</span>
         </div>
       </div>
     </div>
     <div class="flex-grow flex flex-col items-center lg:flex-row lg:flex-wrap">
-      <div v-for="axie in scholar.axies" class="lg:w-1/3 flex flex-col items-center">
-        <div class="flex-shrink-0 flex justify-center w-2/3">
-          <img :src="axie.image">
-        </div>
-        <div class="flex justify-center flex-wrap">
-          <img v-for="part in axie.parts" :src="`/images/${part.card.skill}.png`" class="w-1/2 p-1">
-        </div>
-      </div>
+      <router-view></router-view>
+<!--      <div v-for="axie in scholar.axies" class="lg:w-1/3 flex flex-col items-center">-->
+<!--        <div class="flex-shrink-0 flex justify-center w-2/3">-->
+<!--          <img :src="axie.image">-->
+<!--        </div>-->
+<!--        <div class="flex justify-center flex-wrap">-->
+<!--          <img v-for="part in axie.parts" :src="`/images/${part.card.skill}.png`" class="w-1/2 p-1">-->
+<!--        </div>-->
+<!--      </div>-->
     </div>
   </div>
 </template>
@@ -60,6 +61,12 @@
 
       await axios.get(`/api/token_price/SLPUSDT`)
         .then(response => this.slp_price = response.data);
+    },
+    methods: {
+      convertDate(date) {
+        return new Date(`${date.toString().replace(/(T|.000Z)/g, ' ')} UTC`)
+          .toLocaleString();
+      },
     },
     computed: {
       currentSLPPrice() {

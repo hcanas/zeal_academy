@@ -24,9 +24,9 @@ class Earning extends Model
     ];
 
     protected $casts = [
-        'last_claim_date' => 'datetime:Y-m-d H:i:s',
-        'next_claim_date' => 'datetime:Y-m-d H:i:s',
-        'created_at' => 'datetime:Y-m-d H:i:s',
+        'last_claim_date' => 'datetime',
+        'next_claim_date' => 'datetime',
+        'created_at' => 'datetime',
     ];
 
     public function scholar()
